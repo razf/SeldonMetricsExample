@@ -1,0 +1,15 @@
+FROM python:3.8
+
+COPY . /seldon_metrics
+WORKDIR /seldon_metrics
+
+RUN pip install -r requirements.txt
+
+EXPOSE 9000
+
+ENV MODEL_NAME SeldonMetricsSleepModel
+ENV SERVICE_TYPE MODEL
+ENV FLASK_DEBUG True
+ENV SELDON_LOG_LEVEL DEBUG
+
+CMD exec seldon-core-microservice $MODEL_NAME --service-type $SERVICE_TYPE --debug
